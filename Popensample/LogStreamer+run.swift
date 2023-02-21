@@ -60,7 +60,7 @@ extension LogStreamer {
                         line.count > 128,
                         let logRecord = LogRecord(line)
                     else {
-                        Self.logInfo("ignoring line \(line)")
+                        Self.logInfo("skipping: \(line)")
                         continue
                     }
                     
@@ -134,17 +134,17 @@ extension LogStreamer {
             "--timeout", timeout,
         ]
         
-        if type != nil {
-            logArgs += ["--type", type!]
+        type.forEach {
+            logArgs += ["--type", $0]
         }
         if level != nil {
             logArgs += ["--level", level!]
         }
-        if predicate != nil {
-            logArgs += ["--predicate", predicate!]
+        predicate.forEach {
+            logArgs += ["--predicate", $0]
         }
-        if process != nil {
-            logArgs += ["--process", process!]
+        process.forEach {
+            logArgs += ["--process", $0]
         }
         
         return logArgs

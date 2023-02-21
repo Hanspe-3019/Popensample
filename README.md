@@ -10,26 +10,26 @@ I have chosen *log stream* as the appropriate command, see
 ## Usage:
 
 ```
- logdreamer [--timeout <timeout>] [--dump-messages] [--save <save>]
-            [--predicate <predicate>] [--process <process>]
-            [--type <type>] [--level <level>] 
+ logdreamer [--timeout <timeout>] [--dump] [--save <save>]
+            [--pred <predicate> ...] [--proc <process> ...]
+            [--type <type> ...] [--level <level>] 
 ```
 
 ## Options:
       -t, --timeout <timeout> Terminate streaming after timeout has elapsed,
                               default 2s
                               Passed unchecked to log command. (default: 2s)
-      -d, --dump-messages     Dump log messages as JSON objects
+      --dump, --dump-messages Dump log messages as JSON objects
                                - to stdout or
                                - to file according to option --save.
       -s, --save <save>       Save stats and log messages to the specified
                               directory.
                               Statistics as `logstats-<timestamp>.csv`
                               Log messages as `logmsgs-<timestamp>.json`
-      -p, --predicate <predicate>
+      -pred, --predicate <pred>
                               Predicates to filter
                               Passed unchecked to log command.
-      --process <process>     Only log messages from the specified process
+      --proc --process <proc> Only log messages from the specified process
                               Passed unchecked to log command.
       --type <type>           Limit streaming to a given event type (activity, log
                               or trace).
@@ -68,7 +68,7 @@ wifip2pd     Default com.apple.wifip2pd             xpc                logEvent 
 
 The options \-\-timeout, \-\-predicate, \-\-level, \-\-process and \-\-type are passed unchecked to `log`. Example:
 
-    logdreamer --timeout 1m --process Safari --level info  
+    logdreamer --timeout 1m --proc Safari --proc Mail --level info  
 
 
 The timeout interval can be interrupted with SIGTERM or SIGINT. 
@@ -85,7 +85,7 @@ Log messages are written as **JSON**, Statistics are in **CSV** format.
 
 ```python
 df = pd.read_table(
-    "stats.txt",
+    "stats.csv",
     sep=",",
 )
 ```

@@ -19,7 +19,7 @@ struct LogStreamer: ParsableCommand {
     var timeout : String = "2s"
     
     @Flag(
-        name: .shortAndLong,
+        name: [.customLong("dump"), .customLong("dump-messages")],
         help: """
             Dump log messages as JSON objects
              - to stdout or
@@ -39,24 +39,31 @@ struct LogStreamer: ParsableCommand {
     var saveToDir: String?
     
     @Option(
-        name: .shortAndLong,
-        help: "Predicates to filter\nPassed unchecked to log command."
+        name: [.customLong("pred"), .customLong("predicate")],
+        help: """
+            Predicates to filter, multiple predicates are ORed
+            Passed unchecked to log command.
+            """
     )
-    var predicate: String?
+    var predicate: [String] = []
     
     @Option(
-        help: "Only log messages from the specified process\nPassed unchecked to log command."
+        name: [.customLong("proc"), .customLong("process")],
+        help: """
+            Only log messages from the specified process, multiple process options are ORed.
+            Passed unchecked to log command.
+            """
     )
-    var process: String?
+    var process: [String] = []
     
     @Option(
         help: """
-            Limit streaming to a given event type (activity, log or trace).
+            Limit streaming to given event types (activity, log or trace).
             Default is all.
             Passed unchecked to log command.
             """
     )
-    var type : String?
+    var type : [String] = []
     
     @Option(
         help: """

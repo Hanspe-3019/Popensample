@@ -64,7 +64,23 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--level debug"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--type log  trace"
             isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--process blue --process saf"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-p &apos;subsystem == &quot;com.apple.runningboard&quot;&apos;"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "-p &apos;subsystem == &quot;com.apple.bluetooth&quot;&apos;"
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
    </LaunchAction>
