@@ -14,8 +14,11 @@ struct StatsKey: Hashable, CustomStringConvertible, Comparable {
     }
     
     var description: String {
-        "\(process),\(messageType),\(subsystem),\(category),\(eventType)"
-    }
+        """
+        "\(process)","\(messageType)","\(subsystem)","\(category)","\(eventType)"
+        """
+    
+}
     
     let subsystem: String
     let category: String

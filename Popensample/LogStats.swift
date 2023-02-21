@@ -21,7 +21,7 @@ final class LogStats {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd-HH-mm-ss"
         let suffix = formatter.string(from: Date())
-        let saveURL = directory.appending(component: "logstats-\(suffix).txt")
+        let saveURL = directory.appending(component: "logstats-\(suffix).csv")
         guard FileManager.default.createFile(atPath: saveURL.path(), contents: nil) else {
             print("Could not create \(saveURL.path)")
             saveHandle = nil
@@ -78,6 +78,10 @@ final class LogStats {
         }
         
         do {
+            let header = "Sender,MessageType,SubSystem,Category,EventType,ItsCount,SumMsgLen\n"
+            try saveHandle.write(
+                contentsOf: header.data(using: .utf8)!
+            )
             try stats.forEach {
                 if let line = "\($0.key),\($0.value.formattedForSave())\n".data(using: .utf8) {
                     try saveHandle.write(contentsOf: line)
