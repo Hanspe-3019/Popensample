@@ -21,10 +21,10 @@ I have chosen *log stream* as the appropriate command, see
                               Passed unchecked to log command. (default: 2s)
       -d, --dump-messages     Dump log messages as JSON objects
                                - to stdout or
-                               - to file according to option --output.
+                               - to file according to option --save.
       -s, --save <save>       Save stats and log messages to the specified
                               directory.
-                              Statistics as `logstats-<timestamp>.txt`
+                              Statistics as `logstats-<timestamp>.csv`
                               Log messages as `logmsgs-<timestamp>.json`
       -p, --predicate <predicate>
                               Predicates to filter
@@ -44,7 +44,7 @@ I have chosen *log stream* as the appropriate command, see
 
 ## Discussion
 
-Running `logdreamer` without any options will start streaming for 2 seconds without any filtering and produce an overview of the observed events per combination of Sender, MessageType, SubSystem, Category and EventType: The values shown are the numbers of events and the average length of eventMessages.
+Running `logdreamer` without any options will start streaming for 2 seconds without any filtering and produce an overview of the observed events per combination of Sender, MessageType, SubSystem, Category and EventType: The values shown are the number of events and the average length of the included eventMessages.
 
 ```
 Xcode        Default com.apple.coreaudio            aqme               logEvent            :     3   133.3
@@ -66,7 +66,7 @@ searchpartyd Default com.apple.icloud.searchpartyd  advertisementCache logEvent 
 wifip2pd     Default com.apple.wifip2pd             xpc                logEvent            :     6    73.0
 ``` 
 
-When given, the options \-\-timeout, \-\-predicate, \-\-level, \-\-process and \-\-type are passed unchecked to `log`. Example:
+The options \-\-timeout, \-\-predicate, \-\-level, \-\-process and \-\-type are passed unchecked to `log`. Example:
 
     logdreamer --timeout 1m --process Safari --level info  
 
@@ -75,11 +75,11 @@ The timeout interval can be interrupted with SIGTERM or SIGINT.
 
 ## Using option \-\-save
 
-When given, \-\-save specifies a directory into which the output is stored in files instead of being blown to stdout.
+If specified, \-\-save defines the directory into which the output is stored in files instead of being blown to stdout.
 
 The structure of the output files is suited for post-processing with tools like pandas:
 
-Log messages are written as JSON, Statistics is written CSV-like.
+Log messages are written as **JSON**, Statistics are in **CSV** format.
 
 ### Example post-processing with pandas
 
@@ -87,8 +87,6 @@ Log messages are written as JSON, Statistics is written CSV-like.
 df = pd.read_table(
     "stats.txt",
     sep=",",
-    header=None,
-    names="Sender EventType SubSystem Category Count SumMsgLen".split(),
 )
 ```
 
