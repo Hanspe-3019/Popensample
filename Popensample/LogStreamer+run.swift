@@ -55,9 +55,12 @@ extension LogStreamer {
             if let lines = logBuffer.append(fileHandle.availableData)?.split(separator: "\n") {
                 for line in lines {
                     let line = String(line)
-                    guard line.starts(with: "{"),
-                          line.count > 128,
-                          let logRecord = LogRecord(line) else {
+                    guard
+                        line.starts(with: "{"),
+                        line.count > 128,
+                        let logRecord = LogRecord(line)
+                    else {
+                        Self.logInfo("ignoring line \(line)")
                         continue
                     }
                     

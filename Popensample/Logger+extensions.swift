@@ -13,6 +13,7 @@ extension Logger {
     
     static let logstreamer = Logger(subsystem: subsystem, category: "LogStreamer")
     static let logstats = Logger(subsystem: subsystem, category: "LogStats")
+    static let linebuffer = Logger(subsystem: subsystem, category: "LineBuffer")
 }
 
 extension LogStreamer {
@@ -26,5 +27,13 @@ extension LogStats {
     
     static func logInfo(_ msg: String) {
         Logger.logstats.info("\(msg, privacy: .public)")
+    }
+}
+
+extension LineBuffer {
+    
+    static func logDebug(_ msg: String) {
+        Logger.linebuffer.debug("\(msg, privacy: .public)")
+        
     }
 }

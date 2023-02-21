@@ -47,10 +47,7 @@ final class LogStats {
         stats[key]?.add(size: logrec.eventMessage.count)
     
         if showProgress && eventCount % 100 == 0 {
-            print(
-                "...processed \(eventCount) events, max BufferLength \(LineBuffer.maxLength)",
-                terminator: "\r")
-            LineBuffer.resetCurrentLength()
+            print( "...processed \(eventCount) events", terminator: "\r")
             fflush(__stdoutp)
 
         }
